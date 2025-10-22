@@ -35,13 +35,14 @@ class QuizConsole {
 
       for (var question in quiz.questions) {
         print('Question: ${question.title} - (${question.point} points)');
-        print('Choices: ${question.choices}');
+        print('Choices: ${question.choices.join(', ')}');
         stdout.write('Your answer: ');
         String? userInput = stdin.readLineSync();
 
         // Check for null input
         if (userInput != null && userInput.isNotEmpty) {
-          Answer answer = Answer(question: question, answerChoice: userInput);
+          Answer answer =
+              Answer(questionId: question.id, answerChoice: userInput);
           quiz.addAnswer(answer);
         } else {
           print('No answer entered. Skipping question.');
