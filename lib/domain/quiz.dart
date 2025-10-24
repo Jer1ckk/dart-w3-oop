@@ -1,3 +1,4 @@
+
 import 'package:uuid/uuid.dart';
 
 var uuid = Uuid();
@@ -36,6 +37,7 @@ class Answer {
 class Quiz {
   final String id;
   List<Question> questions;
+  List<Player> players =[];
   List<Answer> answers = [];
 
   Quiz({String? id, required this.questions}) : id = id ?? uuid.v4();
@@ -82,6 +84,7 @@ class Quiz {
 class Player {
   final String userName;
   int _score;
+  List<Answer> answers =[];
 
   Player({required this.userName, int score = 0}) : _score = score;
 

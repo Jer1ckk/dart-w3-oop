@@ -8,18 +8,16 @@ class QuizConsole {
   QuizConsole({required this.quiz});
 
   void startQuiz() {
-    List<Player> players = [];
     print('--- Welcome to the Quiz ---\n');
-
     while (true) {
       stdout.write('Enter Your Name: ');
       String? userNameInput = stdin.readLineSync();
 
       if (userNameInput == null || userNameInput.isEmpty) break;
-      Player player =
-          players.firstWhere((p) => p.userName == userNameInput, orElse: () {
+      Player currentPlayer = quiz.players
+          .firstWhere((p) => p.userName == userNameInput, orElse: () {
         Player newPlayer = Player(userName: userNameInput);
-        players.add(newPlayer);
+        quiz.players.add(newPlayer);
         return newPlayer;
       });
 
@@ -53,16 +51,43 @@ class QuizConsole {
 
       int scoreInPercentage = quiz.getScoreInPercentage();
       int scoreInPoint = quiz.getScore();
-      player.score = scoreInPoint;
-      print('${player.userName} Your score: $scoreInPercentage % correct');
-      print('${player.userName} You score in points: ${scoreInPoint}');
+      currentPlayer.score = scoreInPoint;
+      print(
+          '${currentPlayer.userName}, Your score: $scoreInPercentage % correct');
+      print('${currentPlayer.userName}, You score in points: $scoreInPoint');
 
-      for (Player player in players) {
+      for (Player player in quiz.players) {
         print("Player: ${player.userName} \t Score: ${player.score} points");
       }
 
       quiz.answers.clear();
     }
     print('--- Quiz Finished ---');
+  }
+}
+
+class CreateQuizConsole {
+  Quiz createNewQuiz() {
+    print("\n---Creating New Quiz---");
+
+    List<Question> questions = [];
+    while (true) {
+      stdout.write('Enter Question Title: ');
+      String? title = stdin.readLineSync();
+      if (title == null || title.isEmpty) break;
+
+      stdout.write("Enter Choices peparated by comma: ");
+      List<String> choices = (stdin.readLineSync() ?? '').split(',');
+
+      stdout.write("Enter correct choice: ");
+      String goodChoice = stdin.readLineSync() ?? '';
+
+      stdout.write("Enter point: ");
+      int point = int.tryParse(stdin.readLineSync() ?? '') ?? 10;
+
+      questions.add(Question(title: title, choices: choices, goodChoice: goodChoice, point: point));
+    }
+
+    return Quiz(questions: questions);
   }
 }

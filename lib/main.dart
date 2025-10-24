@@ -4,6 +4,7 @@ import 'data/quiz_file_provider.dart';
 
 void main() {
 
+  //do quiz...
   var filePath = 'assets/quiz.json';
   QuizRepository repo = QuizRepository(filePath);
   Quiz quiz = repo.readQuiz();
@@ -11,7 +12,12 @@ void main() {
   QuizConsole console = QuizConsole(quiz: quiz);
   console.startQuiz();
 
+
+  // create new quiz and save to file
   var filePathWrite = 'assets/quiz-input.json';
   QuizRepository repo2 = QuizRepository(filePathWrite);
-  repo2.writeQuiz(quiz);
+
+  CreateQuizConsole createQuizConsole = CreateQuizConsole();
+  Quiz newQuiz = createQuizConsole.createNewQuiz();
+  repo2.writeQuiz(newQuiz);
 }

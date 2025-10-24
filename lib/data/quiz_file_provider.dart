@@ -45,8 +45,7 @@ class QuizRepository {
     };
 
     final file = File(filePath);
-    // file.writeAsStringSync(jsonEncode(data),
-    //     mode: FileMode.append, flush: true);
+
     file.writeAsStringSync(jsonEncode(data), flush: true);
   }
 }
